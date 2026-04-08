@@ -10,25 +10,21 @@ use Illuminate\Http\Request;
 class SiswaController extends Controller
 {
     public function store(Request $request)
-{
-    $request->validate([
-        'id_kategori' => 'required',
-        'lokasi' => 'required',
-        'ket' => 'required',
-    ]);
+    {
+        $request->validate([
+            'id_kategori' => 'required',
+            'lokasi' => 'required',
+            'ket' => 'required',
+        ]);
 
-    $laporan = InputAspirasi::create([
-        'nis' => Auth::user()->nis, 
-        'id_kategori' => $request->id_kategori,
-        'lokasi' => $request->lokasi,
-        'ket' => $request->ket,
-    ]);
+        $laporan = InputAspirasi::create([
+            'nis' => Auth::user()->nis, 
+            'id_kategori' => $request->id_kategori,
+            'lokasi' => $request->lokasi,
+            'ket' => $request->ket,
+            'status' => 'Menunggu'
+        ]);
 
-    Aspirasi::create([
-        'id_pelaporan' => $laporan->id_pelaporan,
-        'status' => 'Menunggu'
-    ]);
-
-    return redirect()->back()->with('success', 'Aspirasi berhasil dikirim!');
-}
+        return redirect()->back()->with('success', 'Aspirasi berhasil dikirim!');
+    }
 }
